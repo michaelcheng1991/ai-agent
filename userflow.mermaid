@@ -1,0 +1,103 @@
+flowchart TD
+    %% Main User Entry Point
+    Start[User Visits Platform] --> Login[User Login]
+    Login --> UserType{User Type?}
+    
+    %% Different User Paths
+    UserType -->|Admin| AdminDash[Admin Dashboard]
+    UserType -->|Senior Advisor| AdvisorDash[Advisor Dashboard] 
+    UserType -->|Agent in Training| AgentDash[Agent Dashboard]
+    
+    subgraph SeniorAdvisorFlow["SENIOR ADVISOR FLOW"]
+        direction TB
+        subgraph KnowledgeManagement["Knowledge Management"]
+            direction LR
+            AdvisorDash --> UploadKnowledge["Upload Domain Knowledge"]
+            UploadKnowledge --> TagContent["Tag & Categorize Content"]
+        end
+        
+        subgraph PersonaCreation["Persona Creation"]
+            direction LR
+            TagContent --> CreatePersona["Create AI Customer Personas"]
+            CreatePersona --> ConfigureScenarios["Configure Training Scenarios"]
+        end
+        
+        subgraph AgentReview["Performance Review"]
+            direction LR
+            ConfigureScenarios --> ReviewSessions["Review Agent Sessions"]
+            ReviewSessions --> ProvideFeedback["Provide Feedback"]
+            ProvideFeedback --> TrackProgress["Track Agent Progress"]
+        end
+    end
+    
+    subgraph AgentFlow["AGENT IN TRAINING FLOW"]
+        direction TB
+        subgraph Preparation["Preparation"]
+            direction LR
+            AgentDash --> ViewMetrics["View Performance Metrics"]
+            ViewMetrics --> StudyMaterials["Study Knowledge Resources"]
+            StudyMaterials --> SelectScenario["Select Training Scenario"]
+        end
+        
+        subgraph TrainingSession["Training Session"]
+            direction LR
+            SelectScenario --> BeginSimulation["Begin Voice Simulation"]
+            BeginSimulation --> InteractWithAI["Interact with AI Customer"]
+            InteractWithAI --> ApplyKnowledge["Apply Domain Knowledge"]
+            ApplyKnowledge --> HandleObjections["Handle Customer Objections"]
+            HandleObjections --> CompleteSession["Complete Training Session"]
+        end
+        
+        subgraph Feedback["Feedback & Improvement"]
+            direction LR
+            CompleteSession --> ReceiveFeedback["Receive Automated Feedback"]
+            ReceiveFeedback --> ReviewAssessment["Review Performance Assessment"]
+            ReviewAssessment --> PlanNextSteps["Plan Next Training Steps"]
+        end
+    end
+    
+    %% Loop back for continuous improvement
+    PlanNextSteps -.-> SelectScenario
+    
+    subgraph AIEvaluation["AI EVALUATION SYSTEM"]
+        direction TB
+        RecordSession["Session Recording"] --> TranscribeAudio["Speech-to-Text Processing"]
+        TranscribeAudio --> AnalyzeKnowledge["Analyze Knowledge Application"]
+        AnalyzeKnowledge --> CalculateScore["Calculate Performance Score"]
+        CalculateScore --> GenerateFeedback["Generate Detailed Feedback"]
+    end
+    
+    %% Connect AI Evaluation to other flows
+    CompleteSession ==> RecordSession
+    GenerateFeedback ==> ReceiveFeedback
+    GenerateFeedback ==> AdvisorReview["Senior Advisor Review"]
+    AdvisorReview ==> ProvideFeedback
+    
+    subgraph AdminFlow["ADMIN FLOW"]
+        direction TB
+        AdminDash --> ManageUsers["Manage Users & Roles"]
+        AdminDash --> ConfigureSystem["Configure System Settings"]
+        AdminDash --> ViewAnalytics["View Organization Analytics"]
+    end
+    
+    %% Key Component Connections
+    ConfigureSystem -.-> CreatePersona
+    ConfigureSystem -.-> AnalyzeKnowledge
+    ViewAnalytics -.-> TrackProgress
+    
+    %% Style Definitions - Accessibility-friendly colors
+    classDef advisor fill:#5B6ABF,stroke:#000,stroke-width:2px,color:#fff
+    classDef agent fill:#2F7C72,stroke:#000,stroke-width:2px,color:#fff
+    classDef admin fill:#A44A3F,stroke:#000,stroke-width:2px,color:#fff
+    classDef ai fill:#424242,stroke:#000,stroke-width:2px,color:#fff
+    classDef default fill:#fff,stroke:#000,stroke-width:1px,color:#000
+    classDef flowgroup fill:#f9f9f9,stroke:#999,stroke-width:1px,color:#333
+    classDef critical fill:#FFC107,stroke:#000,stroke-width:2px,color:#000
+    
+    %% Apply Styles
+    class AdvisorDash,UploadKnowledge,TagContent,CreatePersona,ConfigureScenarios,ReviewSessions,ProvideFeedback,TrackProgress,AdvisorReview advisor
+    class AgentDash,ViewMetrics,StudyMaterials,SelectScenario,BeginSimulation,InteractWithAI,ApplyKnowledge,HandleObjections,CompleteSession,ReceiveFeedback,ReviewAssessment,PlanNextSteps agent
+    class AdminDash,ManageUsers,ConfigureSystem,ViewAnalytics admin
+    class RecordSession,TranscribeAudio,AnalyzeKnowledge,CalculateScore,GenerateFeedback ai
+    class SeniorAdvisorFlow,AgentFlow,AIEvaluation,AdminFlow,KnowledgeManagement,PersonaCreation,AgentReview,Preparation,TrainingSession,Feedback flowgroup
+    class CreatePersona,ApplyKnowledge,AnalyzeKnowledge,ReceiveFeedback critical
