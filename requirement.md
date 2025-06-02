@@ -17,6 +17,9 @@ we are not testing communication skills
 
 The key flow is for financial advisors to upload domain knowledge and let agents in training to chat with an ai customer persona and test agents' ability to apply the domain knowledge given specific context. After the chat session, the agent will be given a score in certain areas.
 
+## Goal
+Have agents ready in as short of a timeline 
+
 ### 1. Setup: Knowledge Management System + AI Persona Engine + AI-Driven Material Generator
 - see AI persona setup potential inputs (Ginger's diagram - https://app.diagrams.net/?src=about#G1ixO4K9orZfWhuMEXzcKpFEXj9VaZTfsY#%7B%22pageId%22%3A%22YmL12bMKpDGza6XwsDPr%22%7D)
 - Customer Fact Finding 1 pager (https://docs.google.com/spreadsheets/d/1HneaV-3nC6Pa8NaFKbJbkVW5Pe9LUYWICfFNsEgSum8/edit?gid=0#gid=0)
